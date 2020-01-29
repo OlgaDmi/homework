@@ -17,8 +17,6 @@ function returnFirstArgument(x) {
     return x;
 }
 
-returnFirstArgument(10);
-
 /*
  Задание 2:
 
@@ -42,8 +40,6 @@ function sumWithDefaults(a, b) {
     return a + b;
 }
 
-sumWithDefaults(10);
-
 /*
  Задание 3:
 
@@ -56,8 +52,6 @@ sumWithDefaults(10);
 function returnFnResult(fn) {
     return fn();
 }
-
-returnFnResult(() => 'привет')
 
 /*
  Задание 4:
@@ -84,9 +78,6 @@ function returnCounter(number) {
     }
 }
 
-var f = returnCounter(10);
-
-f()
 /*
  Задание 5 *:
 
@@ -106,8 +97,6 @@ function returnArgumentsArray() {
     
     return arr;
 }
-
-returnArgumentsArray(1, 5, 3);
 
 /*
  Задание 6 *:
@@ -140,14 +129,6 @@ function bindFunction(fn) {
         return fn(arg1, arg2);
     }
 }
-
-function sum(a, b) {
-    return a + b;
-}
-
-var newSum = bindFunction(sum, 2, 4);
-
-newSum()
 
 export {
     returnFirstArgument,
