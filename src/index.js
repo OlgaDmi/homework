@@ -79,6 +79,7 @@ function returnCounter(number = 0) {
  */
 
 function returnArgumentsArray() {
+    
     var arr = [];
     
     for (var i = 0; i < arguments.length; i++) {
@@ -87,8 +88,6 @@ function returnArgumentsArray() {
     
     return arr;
 }
-
-console.log(returnArgumentsArray(1, 2, 3));
 
 /*
  Задание 6 *:
@@ -106,21 +105,7 @@ console.log(returnArgumentsArray(1, 2, 3));
    console.log(newSum()) выведет 6
  */
 
-function bindFunction(fn) {
-    var arg = [];
-    
-    for (var i = 1; i < arguments.length; i++) {
-        arg.push(arguments[i]);
-    }
-    
-    var arg1 = arg[0];
-    
-    var arg2 = arg[1];
-    
-    return function() {
-        return fn(arg1, arg2);
-    }
-}
+var bindFunction = (sum, ...arr) => () => sum(...arr)
 
 export {
     returnFirstArgument,
