@@ -31,8 +31,8 @@ function returnFirstArgument(x) {
  Пример:
    sumWithDefaults(10) вернет 110
  */
-function sumWithDefaults(a, b = 100) {
 
+function sumWithDefaults(a, b = 100) {
     return a + b;
 }
 
@@ -64,7 +64,6 @@ function returnFnResult(fn) {
  */
 
 function returnCounter(number = 0) {
-    
     return () => ++number;
 }
 
