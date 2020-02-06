@@ -153,23 +153,65 @@ if(result4 != undefined) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 
+
 function returnBadArguments(fn, ...args) {
 
-    for(let i = 0; i < args.length; i++){
+    var errorList = [];
 
+    try{
         
+        if(typeof fn != 'function') {
+                    
+            throw new Error("fn is not a function");
 
-    }
+        }
+         
+        for(let i = 0; i < args.length; i++){
+
+            try{
+
+                var newValue = fn(args[i]);
+
+            }
+
+            catch(e){
+                
+                errorList.push(e.message);
+        
+                }    
+            
+                }
+            
+                return errorList;
+            
+        }
+        
+        catch(e){
+        
+            console.log(e.message);
+
+        }
 
 }
 
-function sum(item, index, array) {
+function check(value) {
 
-    alert(`item ${item} index ${index} array ${array}`);
+    if(value > 10) {
+
+        throw new Error(value);
+    }
+
+    return value++;
 
 };
 
-returnBadArguments(sum, 1, 2, 3, 4);
+var result5 = returnBadArguments(check, 11, 20, 3, 4);
+
+if(result5 != undefined) {
+
+console.log(result5);
+
+}
 
 /*
  Задание 4:
@@ -188,7 +230,36 @@ returnBadArguments(sum, 1, 2, 3, 4);
    - number не является числом (с текстом "number is not a number")
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
+
+console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+function calculator(number = 0, ...arg) {
+
+    for(let i = 0; i < arg.length; i++){
+
+        var newValue = function(args[i]){return args[i] + newValue;};
+                   
+    }
+
+    var calcObj = {
+
+        sum: function() {
+           return number + newValue;    
+        },
+
+        dif: function() {
+            return number - newValue;
+        },
+
+        div: function() {
+            return number / arg[0];
+        },
+
+        mul: function() {
+            return number * arg[0];
+        }
+
+    }
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
