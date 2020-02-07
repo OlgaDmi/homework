@@ -18,58 +18,42 @@
  */
 function isAllTrue(array, fn) {
 
-    try{
+    try {
 
-        if(array.length == 0 || Array.isArray(array) == false) {
+        if (array.length == 0 || Array.isArray(array) == false) {
 
-            throw new Error("empty array");
+            throw new Error('empty array');
 
-        }
+        } else if (typeof fn != 'function') {
 
-        else if(typeof fn != 'function') {
-
-            throw new Error("fn is not a function");
+            throw new Error('fn is not a function');
 
         }
 
-        for(let i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
 
-        var result = fn(array[i]);
+            var result = fn(array[i]);
 
-        if(result == false) {
+            if (result == false) {
 
-            break;
+                break;
 
+            }
         }
-    }
 
-     return result;
+        return result;
 
-}
+    } catch (e) {
 
-    catch(e){
-
-      console.log(e.message);
+        e.message;
 
     }
 
 }
 
-var result1 = isAllTrue([1, 2, 3, 4], n => n < 10);
+isAllTrue([1, 2, 3, 4], n => n < 10);
 
-var result2 = isAllTrue([100, 2, 3, 4, 5], n => n < 10);
-
-if(result1 != undefined) {
-
-    console.log(result1);
-
-}
-
-if(result2 != undefined ){
-
-    console.log(result2);
-    
-}
+isAllTrue([100, 2, 3, 4, 5], n => n < 10);
 
 /*
  Задание 2:
@@ -91,55 +75,39 @@ function isSomeTrue(array, fn) {
 
     try {
 
-        if(array.length == 0 || Array.isArray(array) == false) {
+        if (array.length == 0 || Array.isArray(array) == false) {
 
-            throw new Error("empty array");
+            throw new Error('empty array');
 
-        }
+        } else if (typeof fn != 'function') {
 
-        else if(typeof fn != 'function') {
-
-            throw new Error("fn is not a function");
+            throw new Error('fn is not a function');
 
         }
 
-        for(let i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length; i++) {
         
-        var result = fn(array[i]);
+            var result = fn(array[i]);
 
-        if(result == true) {
+            if (result == true) {
 
-            break;
+                break;
             
+            }
         }
-    }
 
-     return result;
+        return result;
 
-    }
+    } catch (err) {
 
-    catch(err) {
-
-        console.log(err.message);
+        err.message;
 
     }
 }
 
-var result3 = isSomeTrue([], n => n > 20); // вернет true
+isSomeTrue([], n => n > 20);
 
-var result4 =  isSomeTrue([1, 2, 3, 4, 5], n => n > 20); // вернет false 
-
-if(result3 != undefined) {
-
-    console.log(result3);
-
-}   
-
-if(result4 != undefined) {
-
-    console.log(result4);
-
-}
+isSomeTrue([1, 2, 3, 4, 5], n => n > 20);
 
 /*
  Задание 3:
@@ -157,60 +125,50 @@ function returnBadArguments(fn, ...args) {
 
     var errorList = [];
 
-    try{
+    try {
         
-        if(typeof fn != 'function') {
+        if (typeof fn != 'function') {
                     
-            throw new Error("fn is not a function");
+            throw new Error('fn is not a function');
 
         }
          
-        for(let i = 0; i < args.length; i++){
+        for (let i = 0; i < args.length; i++) {
 
-            try{
+            try {
 
-                var newValue = fn(args[i]);
+                fn(args[i]);
 
-            }
-
-            catch(e){
+            } catch (e) {
                 
                 errorList.push(e.message);
         
-                }    
-            
-                }
-            
-                return errorList;
+            }    
             
         }
+            
+        return errorList;
+            
+    } catch (e) {
         
-        catch(e){
-        
-            console.log(e.message);
+        e.message;
 
-        }
+    }
 
 }
 
 function check(value) {
 
-    if(value > 10) {
+    if (value > 10) {
 
         throw new Error(value);
     }
 
     return value++;
 
-};
-
-var result5 = returnBadArguments(check, 11, 20, 3, 4);
-
-if(result5 != undefined) {
-
-console.log(result5);
-
 }
+
+returnBadArguments(check, 11, 20, 3, 4);
 
 /*
  Задание 4:
@@ -232,56 +190,62 @@ console.log(result5);
 
 function calculator(number = 0, ...arg) {
 
-try{
+    try {
 
-        if(typeof number != 'number') {
+        if (typeof number != 'number') {
                     
-            throw new Error("number is not a number");
+            throw new Error('number is not a number');
 
         }
 
-    var sumOfArg = 0;
+        var sumOfArg = 0;
 
-    arg.forEach((item, index, array) => {
-        if(item == 0){
-            throw new Error("division by 0");
+        arg.forEach((item) => {
+
+            if (item == 0) {
+
+                throw new Error('division by 0');
+
+            }
+
+            sumOfArg = item + sumOfArg;
+
+            return sumOfArg;
+        })
+
+        var calcObj = {
+
+            sum: function() {
+
+                return number + sumOfArg;
+
+            },
+
+            dif: function() {
+                return number - sumOfArg;
+            },
+
+            div: function() {
+                return number / arg[0];
+            },
+
+            mul: function() {
+                return number * arg[0];
+            }
+
         }
-        sumOfArg = item + sumOfArg;
-        return sumOfArg;
-  })
 
-    var calcObj = {
+        return calcObj;
 
-        sum: function() {
-           return number + sumOfArg;    
-        },
+    } catch (e) {
 
-        dif: function() {
-            return number - sumOfArg;
-        },
+        e.message;
 
-        div: function() {
-            return number / arg[0];
-        },
-
-        mul: function() {
-            return number * arg[0];
-        }
-
-    }
-
-    return calcObj;
-   }
-   catch(e){
-       console.log(e.message);
-   } 
+    } 
 
 }
 
-var result6 = calculator(1, 2, 0, 4, 5);
-if(result6 != undefined) {
-    console.log(result6);
-}
+calculator(1, 2, 0, 4, 5);
 
 /* При решении задач, пострайтесь использовать отладчик */
 
