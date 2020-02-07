@@ -33,7 +33,7 @@ function isAllTrue(array, fn) {
         }
 
         for(let i = 0; i < array.length; i++) {
-        
+
         var result = fn(array[i]);
 
         if(result == false) {
@@ -153,7 +153,6 @@ if(result4 != undefined) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 
-
 function returnBadArguments(fn, ...args) {
 
     var errorList = [];
@@ -231,24 +230,34 @@ console.log(result5);
    - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 
-console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-
 function calculator(number = 0, ...arg) {
 
-    for(let i = 0; i < arg.length; i++){
+try{
 
-        var newValue = function(args[i]){return args[i] + newValue;};
-                   
-    }
+        if(typeof number != 'number') {
+                    
+            throw new Error("number is not a number");
+
+        }
+
+    var sumOfArg = 0;
+
+    arg.forEach((item, index, array) => {
+        if(item == 0){
+            throw new Error("division by 0");
+        }
+        sumOfArg = item + sumOfArg;
+        return sumOfArg;
+  })
 
     var calcObj = {
 
         sum: function() {
-           return number + newValue;    
+           return number + sumOfArg;    
         },
 
         dif: function() {
-            return number - newValue;
+            return number - sumOfArg;
         },
 
         div: function() {
@@ -260,6 +269,18 @@ function calculator(number = 0, ...arg) {
         }
 
     }
+
+    return calcObj;
+   }
+   catch(e){
+       console.log(e.message);
+   } 
+
+}
+
+var result6 = calculator(1, 2, 0, 4, 5);
+if(result6 != undefined) {
+    console.log(result6);
 }
 
 /* При решении задач, пострайтесь использовать отладчик */
