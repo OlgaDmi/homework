@@ -6,28 +6,13 @@
  Напишите аналог встроенного метода forEach для работы с массивами
  Посмотрите как работает forEach и повторите это поведение для массива, который будет передан в параметре array
  */
-
-let arrNumbers = [1, 5, 6];
-
 function forEach(array, fn) {
     
-    for(let i = 0; i < array.length; i++){
-        
-        const result = fn(array[i], i, array);
-        
-        console.log(result);
-    }
-}
-
-function getArr(value, indx, array){
-
     for (let i = 0; i < array.length; i++) {
         
-        var result = fn(array[i], i, array);
+        fn(array[i], i, array);
         
     }
-
-    return result;
 
 }
 
@@ -37,7 +22,7 @@ function getArr(value, indx, array) {
     
 }
 
-forEach(arrNumbers, getArr);
+forEach([1, 5, 6], getArr);
 
 /*
  Задание 2:
@@ -45,9 +30,6 @@ forEach(arrNumbers, getArr);
  Напишите аналог встроенного метода map для работы с массивами
  Посмотрите как работает map и повторите это поведение для массива, который будет передан в параметре array
  */
-
-var fruits = ['Apple', 'Orange', 'Banana'];
-
 function map(array, fn) {
 
     let newArray = [];
@@ -68,7 +50,7 @@ function getArrMap(value, indx, array) {
     
 }
 
-map(fruits, getArrMap);
+map(['Apple', 'Orange', 'Banana'], getArrMap);
 
 /*
  Задание 3:
@@ -76,12 +58,13 @@ map(fruits, getArrMap);
  Напишите аналог встроенного метода reduce для работы с массивами
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
+function reduce(array, fn, initial) {
 
-var someNumbers = [1, 2, 3, 4];
+    var indxFirst;
 
-function reduce(array, fn, initial = array[0]) {
+    initial ? indxFirst = 0 : (initial = array[0], indxFirst = 1);
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i = indxFirst; i < array.length; i++) {
 
         initial = fn(initial, array[i], i, array);
 
@@ -95,7 +78,7 @@ function sum(initial, value, indx, array) {
     return value + initial;
 } 
 
-reduce(someNumbers, sum, 5);
+reduce([1, 2, 3, 4], sum, 5);
 
 /*
  Задание 4:
@@ -129,9 +112,6 @@ upperProps({ name: 'Сергей', lastName: 'Петров' })
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
-
-var cloth = ['брюки', 'топ', 'джинсы', 'колготки', 'пиджак'];
-
 function slice(array, from, to = array.length) {
 
     let newArray1 = [];
@@ -157,7 +137,7 @@ function slice(array, from, to = array.length) {
 
 }
 
-slice(cloth, -3, -1);
+slice(['брюки', 'топ', 'джинсы', 'колготки', 'пиджак'], -3, -1);
 
 /*
  Задание 6 *:
