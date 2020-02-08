@@ -73,7 +73,7 @@ function reduce(array, fn, initial) {
     return initial;
 }
 
-function sum(initial, value, indx, array) {
+function sum(initial, value) {
 
     return value + initial;
 } 
@@ -116,15 +116,14 @@ function slice(array, from, to = array.length) {
 
     let newArray1 = [];
 
-    if (from < 0) {
+    from < 0 ? (from = array.length + from) : from;
 
-        from = array.length + from;
+    to < 0 ? to = array.length + to : to;
 
-    }
+    if (from > array.length) {
 
-    if (to < 0) {
+        return newArray1;
 
-        to = array.length + to;
     }
 
     for (let i = from; i < to; i++) { 
@@ -155,12 +154,18 @@ function createProxy(obj) {
 
     obj = new Proxy(obj, {
         
-        set(obj, prop, val) { 
-    
-            val = Math.pow(val, 2);
- 
-            return val;
+        set(target, prop, val) {
 
+            if (typeof val == 'number') {
+
+                target[prop] = Math.pow(val, 2);
+
+            } else {
+
+                throw new Error('value должен быть числом');
+
+            }
+ 
         }
         
     });
@@ -171,9 +176,7 @@ function createProxy(obj) {
 
 createProxy(garage);
 
-garage.cars = 5;
-
-garage.scooters = 6;
+garage.cars = 3;
 
 export {
     forEach,
