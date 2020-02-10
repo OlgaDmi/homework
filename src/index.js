@@ -49,10 +49,18 @@ function prepend(what, where) {
    findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
-  for (let elem of where){
-    console.log(elem);
-  }
+    let nextP = [];
+
+    for (let i = 0; i < where.children.length - 1; i++) {
+        if (where.children[i].nextElementSibling.tagName === 'P') {
+            nextP.push(where.children[i]);
+        } 
+    }
+
+    return nextP;
 }
+
+findAllPSiblings(document.body);
 
 /*
  Задание 4:
@@ -74,7 +82,7 @@ function findAllPSiblings(where) {
 function findError(where) {
     var result = [];
 
-    for (var child of where.childNodes) {
+    for (var child of where.children) {
         result.push(child.innerText);
     }
 
@@ -94,6 +102,11 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
+  for (let i = 0; i < where.childNodes.length; i++){
+      if (where.childNodes[i].nodeName === '#text'){
+          where.removeChild(where.childNodes[i]);
+      }
+  }
 }
 
 /*
@@ -108,7 +121,28 @@ function deleteTextNodes(where) {
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
+  // если нам передали элемент
+      // берем его первый дочерний узел
+      var child = where.firstChild;
+      // пока узлы не закончились
+      while (child) {
+          // если этот узел является элементом
+          if (child.nodeName === '#text') {
+              // что-то делаем с найденным элементом
+              // where.removeChild(child);
+              console.log('элемент ' + child.nodeName);
+              // рекурсивно перечисляем дочерние узлы
+             
+          }  
+          deleteTextNodesRecursive(child);  
+          // переходим к следующему узлу
+          // where.removeChild(child);
+          child = child.nextSibling;
+          
+      }
 }
+
+deleteTextNodesRecursive(document.body);
 
 /*
  Задание 7 *:
