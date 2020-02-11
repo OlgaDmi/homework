@@ -12,8 +12,10 @@
  */
 function createDivWithText(text) {
     let div = document.createElement('div');
+
     div.innerText = text;
     document.body.appendChild(div);
+
     return div;
 }
 
@@ -102,11 +104,11 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-  for (let i = 0; i < where.childNodes.length; i++){
-      if (where.childNodes[i].nodeName === '#text'){
-          where.removeChild(where.childNodes[i]);
-      }
-  }
+    for (let i = 0; i < where.childNodes.length; i++) {
+        if (where.childNodes[i].nodeName === '#text') {
+            where.removeChild(where.childNodes[i]);
+        }
+    }
 }
 
 /*
@@ -121,28 +123,19 @@ function deleteTextNodes(where) {
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
-  // если нам передали элемент
-      // берем его первый дочерний узел
-      var child = where.firstChild;
-      // пока узлы не закончились
-      while (child) {
-          // если этот узел является элементом
-          if (child.nodeName === '#text') {
-              // что-то делаем с найденным элементом
-              // where.removeChild(child);
-              console.log('элемент ' + child.nodeName);
-              // рекурсивно перечисляем дочерние узлы
-             
-          }  
-          deleteTextNodesRecursive(child);  
-          // переходим к следующему узлу
-          // where.removeChild(child);
-          child = child.nextSibling;
-          
-      }
-}
+    let child = where.firstChild;
+    let toRemove = [];
 
-deleteTextNodesRecursive(document.body);
+    while (child) {
+        if (child.nodeName === '#text') {
+            toRemove.push(child);
+        }  
+        deleteTextNodesRecursive(child);  
+        child = child.nextSibling;
+    }
+
+    toRemove.forEach(element => where.removeChild(element));
+}
 
 /*
  Задание 7 *:
