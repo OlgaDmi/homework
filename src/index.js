@@ -14,7 +14,6 @@ function createDivWithText(text) {
     let div = document.createElement('div');
 
     div.innerText = text;
-    document.body.appendChild(div);
 
     return div;
 }
@@ -52,17 +51,14 @@ function prepend(what, where) {
  */
 function findAllPSiblings(where) {
     let nextP = [];
+    const elements = where.querySelectorAll('p');
 
-    for (let i = 0; i < where.children.length - 1; i++) {
-        if (where.children[i].nextElementSibling.tagName === 'P') {
-            nextP.push(where.children[i]);
-        } 
+    for (let i = 0; i < elements.length; i++) {
+        nextP.push(elements[i].previousElementSibling);
     }
 
     return nextP;
 }
-
-findAllPSiblings(document.body);
 
 /*
  Задание 4:
@@ -82,9 +78,9 @@ findAllPSiblings(document.body);
    findError(document.body) // функция должна вернуть массив с элементами 'привет' и 'loftschool'
  */
 function findError(where) {
-    var result = [];
+    let result = [];
 
-    for (var child of where.children) {
+    for (let child of where.children) {
         result.push(child.innerText);
     }
 
