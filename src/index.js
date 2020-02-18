@@ -35,6 +35,7 @@ function loadAndSortTowns() {
 
     return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
+
         xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
         xhr.responseType = 'json';
 
@@ -50,7 +51,7 @@ function loadAndSortTowns() {
                         return -1;
                     }
 
-                return 0;
+                    return 0;
                 });
                 resolve(cities);
             } else {
@@ -62,7 +63,7 @@ function loadAndSortTowns() {
         };
 
         xhr.onerror = function() {
-            reject(new Error("Network Error"));
+            reject(new Error('Network Error'));
         };
 
         xhr.send();
