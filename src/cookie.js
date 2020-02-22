@@ -44,28 +44,28 @@ const addButton = homeworkContainer.querySelector('#add-button');
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
 function newTrBuild(cookie) {
-    if(cookie){
+    if (cookie) {
         const tr = listTable.insertRow(0);
         let cookieArr = cookie.split('=');
         
         for (let i = 0; i < 3; i++) {
             const td = tr.insertCell(-1);
         
-        if (i != 2) {
-            td.innerText = cookieArr[i];
-        } else {
-            let deleteBtn = document.createElement('button');
-        
-            deleteBtn.innerText = 'Удалить';
-            deleteBtn.addEventListener('click', function(){
-            let datePast = new Date(Date.now() - 1000);
+            if (i != 2) {
+                td.innerText = cookieArr[i];
+            } else {
+                let deleteBtn = document.createElement('button');
             
-            datePast = datePast.toUTCString();
-            document.cookie = `${cookie};expires=${datePast}`;
-            tr.remove();
-        });
-            td.appendChild(deleteBtn);
-        }
+                deleteBtn.innerText = 'Удалить';
+                deleteBtn.addEventListener('click', function() {
+                    let datePast = new Date(Date.now() - 1000);
+                    
+                    datePast = datePast.toUTCString();
+                    document.cookie = `${cookie};expires=${datePast}`;
+                    tr.remove();
+                });
+                td.appendChild(deleteBtn);
+            }
         }
     }
 }
@@ -97,7 +97,6 @@ filterNameInput.addEventListener('keyup', function() {
         } else { 
             for (let a = 0; a < listTable.children.length; a++) {
                 let listName = listTable.children[a].children[0].textContent;
-                let listValue = listTable.children[a].children[1].textContent;
                         
                 if (isMatching(listName, filtrValue)) {
                     listTable.children[a].style.display = 'table-row';
@@ -127,8 +126,8 @@ addButton.addEventListener('click', () => {
                 
                 if (nameCookie === listValue) {
                     if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
-                    isTr.children[1].innerText = valueCookie;
-                    break;
+                        isTr.children[1].innerText = valueCookie;
+                        break;
                     } else {
                         listTable.children[a].remove();
                         break;
@@ -144,14 +143,13 @@ addButton.addEventListener('click', () => {
                     }
                 }
             }
-        } 
-    else {
-        if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
-            newTrBuild(cookie);
-            document.cookie = `${cookie}`;
         } else {
-            document.cookie = `${cookie}`;
+            if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
+                newTrBuild(cookie);
+                document.cookie = `${cookie}`;
+            } else {
+                document.cookie = `${cookie}`;
+            }
         }
     }
-}
 });
