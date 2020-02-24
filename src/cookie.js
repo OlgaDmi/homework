@@ -46,13 +46,15 @@ const listTable = homeworkContainer.querySelector('#list-table tbody');
 function newTrBuild(cookie) {
     if (cookie) {
         const tr = listTable.insertRow(0);
-        let cookieArr = cookie.split('=');
+        let [name, value] = cookie;
         
         for (let i = 0; i < 3; i++) {
             const td = tr.insertCell(-1);
         
-            if (i != 2) {
-                td.innerText = cookieArr[i];
+            if (i === 0) {
+                td.innerText = name;
+            } else if (i === 1) {
+                td.innerText = value;
             } else {
                 let deleteBtn = document.createElement('button');
             
@@ -61,8 +63,8 @@ function newTrBuild(cookie) {
                     let datePast = new Date(Date.now() - 1000);
                     
                     datePast = datePast.toUTCString();
-                    document.cookie = `${cookie};expires=${datePast}`;
-                    tr.remove();
+                    document.cookie = `${name}=${value};expires=${datePast}`;
+                    event.target.closest('tr').remove();
                 });
                 td.appendChild(deleteBtn);
             }
@@ -78,78 +80,38 @@ function isMatching(full, chunk) {
     return false;
 }
 
-function getAllCookie(cookie) {
-    let cookieArr = cookie.split(';');
+function getCookie() {
+    listTable.innerHTML = '';
 
-    for (let i = 0; i < cookieArr.length; i++) {
-        newTrBuild(cookieArr[i]);
+    if (document.cookie) {
+        let cookieArr = document.cookie.split(';');
+
+        cookieArr.forEach(element => {
+            madeCookie(element.split('='));
+        });
+    }
+}
+
+function madeCookie(cookie) {
+    if (filterNameInput.value) {
+        for (const key in cookie) {
+            if (isMatching(key, filterNameInput.value) || isMatching(cookie[key], filterNameInput.value)) {
+                newTrBuild(cookie);
+
+                return;
+            }
+        }
+    } else {
+        newTrBuild(cookie);
     }
 }
 
 filterNameInput.addEventListener('keyup', function() {
-    let isTr = document.querySelector('#list-table tbody tr');
-    let filtrValue = filterNameInput.value;
-    
-    if (isTr != null) {
-        if (filtrValue === '') {
-            listTable.textContent = '';
-            getAllCookie(document.cookie);
-        } else { 
-            for (let a = 0; a < listTable.children.length; a++) {
-                let listName = listTable.children[a].children[0].textContent;
-                        
-                if (isMatching(listName, filtrValue)) {
-                    listTable.children[a].style.display = 'table-row';
-                } else {
-                    listTable.children[a].style.display = 'none';
-                }
-            }
-        }
-    }
+    getCookie();
 });
  
 addButton.addEventListener('click', () => {
-    let nameCookie = addNameInput.value;
-    let valueCookie = addValueInput.value;
-    let filtrName = filterNameInput.value;
- 
-    if (nameCookie && valueCookie) {
-        let nameFiltrResult = isMatching(nameCookie, filtrName);
-        let valueFiltrResult = isMatching(valueCookie, filtrName);
-        let cookie = `${nameCookie}=${valueCookie}`;
-        let isTd = document.querySelector('#list-table tbody tr td');
-        
-        if (isTd != null) {
-            for (let a = 0; a < listTable.children.length; a++) {
-                let isTr = listTable.children[a];
-                let listValue = isTr.children[0].textContent;
-                
-                if (nameCookie === listValue) {
-                    if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
-                        isTr.children[1].innerText = valueCookie;
-                        break;
-                    } else {
-                        listTable.children[a].remove();
-                        break;
-                    }
-                } else {
-                    if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
-                        newTrBuild(cookie);
-                        document.cookie = `${cookie}`;
-                        break;
-                    } else {
-                        document.cookie = `${cookie}`;
-                        break;
-                    }
-                }
-            }
-        } else {
-            if (valueFiltrResult && nameFiltrResult || !valueFiltrResult && nameFiltrResult || valueFiltrResult && !nameFiltrResult) {
-                newTrBuild(cookie);
-                document.cookie = `${cookie}`;
-            } else {
-                document.cookie = `${cookie}`;
-            }
-        }
-    }
+    document.cookie = `${addNameInput.value}=${addValueInput.value}`;
+
+    getCookie();
 });
